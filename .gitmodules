@@ -1,0 +1,3 @@
+[submodule "TeraDpsMeterData"]
+	path = TeraDpsMeterData
+	url = https://github.com/neowutran/TeraDpsMeterData
