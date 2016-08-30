@@ -1,3 +1,6 @@
-[submodule "TeraDpsMeterData"]
-	path = TeraDpsMeterData
+[submodule "web/TeraDpsMeterData"]
+	path = web/TeraDpsMeterData
 	url = https://github.com/neowutran/TeraDpsMeterData
+[submodule "web/data"]
+	path = web/data
+	url = https://github.com/neowutran/TeraDatabaseData

@@ -10,8 +10,8 @@ $this->title = 'Tera Database Analysor';
 
         <h1>Tera Database Analysor</h1>
         <br>
-        <h1> Contribute here: <a href="https://github.com/neowutran/TeraDatabaseAnalysor"> TeraDatabaseAnalysor </a>
-        </h1>
+        <h1> Contribute here for extracting the data: <a href="https://github.com/neowutran/TeraDatabaseAnalysor"> TeraDatabaseAnalysor </a></h1>
+        <h1> or here for the UI: <a href="https://github.com/neowutran/TeraDatabaseWebsite"> TeraDatabaseAnalysorWebsite </a></h1>
 
     </div>
 </div>

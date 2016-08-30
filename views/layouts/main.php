@@ -8,7 +8,7 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\helpers\Html;
 use yii\widgets\Breadcrumbs;
-
+use app\components\MenuWidget;
 AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
@@ -33,6 +33,16 @@ AppAsset::register($this);
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
     ]);
+
+    $items = [];
+    $items[]=  ['label' => 'Global', 'url' => ['/dps/global']];
+    $items[] = ['label' => 'By class', 'url' => ['/dps/class']];
+    $items[] = ['label' => 'By class - Sum', 'url' => ['/dps/classsum']];
+    $list_boss = unserialize(MenuWidget::widget(['language' => 'EU-EN']));
+    foreach ($list_boss as $area){
+        $items[] = $area;
+    }
+
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
@@ -47,11 +57,7 @@ AppAsset::register($this);
                 ['label' => 'By date - JP', 'url' => ['/class/date', 'region' => 'JP']],
 
             ]],
-            ['label' => 'Dps statistics', 'items' => [
-                ['label' => 'Global', 'url' => ['/dps/global']],
-                ['label' => 'By class', 'url' => ['/dps/class']],
-                ['label' => 'By class - Sum', 'url' => ['/dps/classsum']],
-            ]]
+            ['label' => 'Dps statistics', 'items' => $items]
 
         ],
     ]);

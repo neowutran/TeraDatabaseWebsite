@@ -2,11 +2,30 @@
 
 namespace app\models;
 
+use yii\base\Exception;
 use yii\base\Model;
 
 abstract class Parsing extends Model
 {
     protected static $basedir = "/home/http/neowutran-website/web/data/";
+
+
+
+    public static function boss($language){
+        if(
+            $language !== "EU-EN" &&
+            $language !== "EU-FR" &&
+            $language !== "EU-GER" &&
+            $language !== "JP" &&
+            $language !== "KR" &&
+            $language !== "RU" &&
+            $language !== "TW" &&
+            $language !== "NA"
+        ){
+            throw new Exception("Go fuck yourself");
+        }
+        return simplexml_load_file("/home/http/neowutran-website/web/TeraDpsMeterData/monsters/monsters-".$language.".xml");
+    }
 
     protected static function _parseFile($file)
     {
