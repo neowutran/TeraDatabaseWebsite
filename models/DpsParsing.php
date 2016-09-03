@@ -6,12 +6,6 @@ use yii\base\Exception;
 
 class DpsParsing extends Parsing
 {
-
-    public static function globalData()
-    {
-        return ClassParsing::_parseFile("dps/total.txt");
-    }
-
     public static function classData()
     {
         $result = [];
@@ -31,7 +25,6 @@ class DpsParsing extends Parsing
         if( !preg_match("#^\d+$#", $areaId) ||
             !preg_match("#^\d+$#",$bossId)){
             throw new Exception("Go fuck yourself");
-
         }
 
         $result = [];
@@ -48,11 +41,11 @@ class DpsParsing extends Parsing
             throw new Exception("Go fuck yourself");
         }
 
-        $files = scandir(ClassParsing::$basedir . "dps/by_class_boss/".$areaId.".".$bossId."/");
+        $files = scandir(ClassParsing::$basedir . "dps/by_boss_class/".$areaId.".".$bossId."/");
         foreach ($files as $file) {
             $matches = [];
             if (preg_match("#^(.+)\.txt$#", $file, $matches)) {
-                $result[$matches[1]] = ClassParsing::_parseFile("dps/by_class_boss/".$areaId.".".$bossId."/" . $file);
+                $result[$matches[1]] = ClassParsing::_parseFile("dps/by_boss_class/".$areaId.".".$bossId."/" . $file);
             }
         }
         return $result;

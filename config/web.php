@@ -12,7 +12,8 @@ $config = [
             'showScriptName' => false,
             'enableStrictParsing' => false,
             'rules' => [
-                // your rules go here
+                'dps/boss/<areaId:\d+>/<bossId:\d+>' => 'dps/boss',
+                'dps/area/<areaId:\d+>' => 'dps/area',
             ],
             // ...
         ],
@@ -48,14 +49,7 @@ $config = [
             ],
         ],
         'db' => require(__DIR__ . '/db.php'),
-        /*
-        'urlManager' => [
-            'enablePrettyUrl' => true,
-            'showScriptName' => false,
-            'rules' => [
-            ],
-        ],
-        */
+
     ],
     'params' => $params,
 ];

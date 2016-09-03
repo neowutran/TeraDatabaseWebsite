@@ -30,28 +30,22 @@ class ClassController extends Controller
         ];
     }
 
-
-    public function actionGlobal()
+    public function actionIndex()
     {
-        $data = ClassParsing::globalData();
-        return $this->render('global', ["data" => $data]);
-    }
+        $regions = [];
+        $global = ClassParsing::globalData();
+        $globalRegion = ClassParsing::regionData();
+        $regions["EU"] =  ClassParsing::dateData("EU");
+        $regions["NA"] = ClassParsing::dateData("NA");
+        $regions["RU"] = ClassParsing::dateData("RU");
+        $regions["TW"] = ClassParsing::dateData("TW");
+        $regions["KR"] = ClassParsing::dateData("KR");
+        $regions["JP"] = ClassParsing::dateData("JP");
 
-    public function actionRegion()
-    {
-        $data = ClassParsing::regionData();
-        return $this->render('region', [
-            "data" => $data,
-        ]);
-
-    }
-
-    public function actionDate($region)
-    {
-        $data = ClassParsing::dateData($region);
-        return $this->render('date', [
-            "data" => $data,
-            "region" => $region,
+        return $this->render('index', [
+            "globalRegion" => $globalRegion,
+            "global" => $global,
+            "regions" => $regions
         ]);
 
     }

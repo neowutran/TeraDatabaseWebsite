@@ -52,26 +52,11 @@ class DpsController extends Controller
         return $this->render('boss', ["data"=>$data,"areaName"=> $areaName, "areaId"=>$areaId, "bossName"=>$bossName, "bossId"=>$bossId ]);
     }
 
-    public function actionGlobal()
+    public function actionIndex()
     {
-        $data = DpsParsing::globalData();
-        return $this->render('global', ["data" => $data]);
-    }
-
-    public function actionClass()
-    {
-        $data = DpsParsing::classData();
-        return $this->render('class', [
-            "data" => $data,
-        ]);
-
-    }
-
-    public function actionClasssum()
-    {
-        $data = DpsParsing::classData();
-        return $this->render('classsum', [
-            "data" => $data,
+        $classData = DpsParsing::classData();
+        return $this->render('index', [
+            "classData" => $classData,
         ]);
 
     }

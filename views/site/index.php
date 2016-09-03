@@ -10,8 +10,12 @@ $this->title = 'Tera Database Analysor';
 
         <h1>Tera Database Analysor</h1>
         <br>
-        <h1> Contribute here for extracting the data: <a href="https://github.com/neowutran/TeraDatabaseAnalysor"> TeraDatabaseAnalysor </a></h1>
-        <h1> or here for the UI: <a href="https://github.com/neowutran/TeraDatabaseWebsite"> TeraDatabaseAnalysorWebsite </a></h1>
+        <h2>Contribute</h2>
+        <ul>
+            <li> Python software to extract data: <a href="https://github.com/neowutran/TeraDatabaseAnalysor"> TeraDatabaseAnalysor </a></li>
+            <li> Raw data extracted: <a href="https://github.com/neowutran/TeraDatabaseData"> TeraDatabaseData </a></li>
+            <li> Yii2 website to display data: <a href="https://github.com/neowutran/TeraDatabaseWebsite"> TeraDatabaseAnalysorWebsite </a></li>
+        </ul>
 
     </div>
 </div>

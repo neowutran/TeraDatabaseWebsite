@@ -1,13 +1,9 @@
 <?php
 
-/* @var $this yii\web\View */
-/* @var $form yii\bootstrap\ActiveForm */
-/* @var $model app\models\LoginForm */
-
 use dosamigos\chartjs\ChartJs;
-use yii\bootstrap\ActiveForm;
+use yii\bootstrap\Tabs;
 
-$this->title = 'DPS by class';
+$this->title = 'DPS';
 $this->params['breadcrumbs'][] = $this->title;
 $backgroundColor = [
     'rgba(255, 99, 132, 0.2)',
@@ -26,16 +22,19 @@ $borderColor = [
     'rgba(255, 159, 64, 1)',
 ];
 ?>
-<div class="body-content">
-<h1>How to read this graph</h1>
+    <h1>How to read this graph</h1>
     <p>
-        <ul>
+    <ul>
         <li>X axis: DPS in Million / Second</li>
-        <li>Y axis: % of the playerbase able to do more or the same DPS as the X value</li>
+        <li>Y axis: % of the playerbase doing the same DPS as the X value</li>
     </ul>
     </p>
     <?php
-    foreach ($data as $class => $class_data) {
+
+    $active = true;
+    $items = [];
+    $itemsSum = [];
+    foreach ($classData as $class => $class_data) {
         $i = 0;
         $data_count = [];
         $current_background = [];
@@ -58,8 +57,38 @@ $borderColor = [
             $sum_percentage[] = round((($class_data[2] - $sum) * 100) / $class_data[2], 3);
         }
 
-        echo "<h2>Global $class sum DPS statistics</h2>";
-        echo ChartJs::widget([
+        $chart =  ChartJs::widget([
+            'type' => 'bar',
+            'options' => [
+                'responsive' => true,
+                'title' => [
+                    'display' => false,
+                    'text' => $class . ' dps'
+                ],
+                "tooltips" => [
+                    "enabled" => false,
+                ],
+                "legend" => [
+                    "display" => true
+                ],
+            ],
+
+            'data' => [
+                'labels' => $class_data[0],
+                'datasets' => [
+                    [
+                        'label' => $class . " class ",
+                        'backgroundColor' => $current_background,
+                        'borderColor' => $current_border,
+                        'borderWidth' => 1,
+                        'data' => $data_count,
+                    ],
+
+                ]
+            ]
+        ]);
+
+        $chartSum =  ChartJs::widget([
             'type' => 'bar',
             'options' => [
                 'responsive' => true,
@@ -81,8 +110,8 @@ $borderColor = [
                             "display" => true,
                             "labelString" => 'probability'
                         ]]]
-                    ]
-                ],
+                ]
+            ],
 
             'data' => [
                 'xLabels'=>'probabiliyy',
@@ -101,7 +130,34 @@ $borderColor = [
             ]
         ]);
 
+        $items[] = [
+            'label' => $class,
+            'content' => $chart,
+            'active' =>$active
+        ];
+
+
+        $itemsSum[] = [
+            'label' => $class,
+            'content' => $chartSum,
+            'active' =>$active
+        ];
+
+        $active = false;
+
     }
 
     ?>
-</div>
+
+    <h2>DPS</h2>
+    <?php
+    echo Tabs::widget([
+        'items' => $items
+    ]);
+    ?>
+    <h2>DPS sum</h2>
+    <?php
+    echo Tabs::widget([
+        'items' => $itemsSum
+    ]);
+    ?>

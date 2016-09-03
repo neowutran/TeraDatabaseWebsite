@@ -1,9 +1,9 @@
 <?php
 
 use dosamigos\chartjs\ChartJs;
-use yii\bootstrap\ActiveForm;
+use yii\bootstrap\Tabs;
 
-$this->title = 'DPS on'.$bossName;
+$this->title = 'DPS on '.$bossName;
 $this->params['breadcrumbs'][] = $this->title;
 $backgroundColor = [
     'rgba(255, 99, 132, 0.2)',
@@ -24,8 +24,6 @@ $borderColor = [
 ?>
 <div class="body-content">
 
-    <h1>!!! WIP !!!</h1>
-
     <h1>How to read this graph</h1>
     <p>
     <ul>
@@ -34,7 +32,10 @@ $borderColor = [
     </ul>
     </p>
     <?php
-    foreach ($data as $boss => $boss_data) {
+
+    $items = [];
+    $itemsSum = [];
+    foreach ($data as $class => $boss_data) {
         $i = 0;
         $data_count = [];
         $current_background = [];
@@ -57,8 +58,7 @@ $borderColor = [
             $sum_percentage[] = round((($boss_data[2] - $sum) * 100) / $boss_data[2], 3);
         }
 
-        echo "<h2>Global $bossName DPS statistics</h2>";
-        echo ChartJs::widget([
+        $chart =  ChartJs::widget([
             'type' => 'bar',
             'options' => [
                 'responsive' => true,
@@ -89,7 +89,71 @@ $borderColor = [
             ]
         ]);
 
-    }
 
+        $chartSum =  ChartJs::widget([
+            'type' => 'bar',
+            'options' => [
+                'responsive' => true,
+                'title' => [
+                    'display' => false,
+                    'text' => $bossName . ' dps'
+                ],
+                "tooltips" => [
+                    "enabled" => false,
+                ],
+                "legend" => [
+                    "display" => true
+                ],
+            ],
+
+            'data' => [
+                'labels' => $boss_data[0],
+                'datasets' => [
+                    [
+                        'label' => $bossName . " boss ",
+                        'backgroundColor' => $current_background,
+                        'borderColor' => $current_border,
+                        'borderWidth' => 1,
+                        'data' => $sum_percentage,
+                    ],
+
+                ]
+            ]
+        ]);
+
+
+        $active = false;
+        if($class == "Global"){
+            $active = true;
+        }
+
+        $items[] = [
+            'label' => $class,
+            'content' => $chart,
+            'active' =>$active
+        ];
+
+
+        $itemsSum[] = [
+            'label' => $class,
+            'content' => $chartSum,
+            'active' =>$active
+        ];
+
+
+    }
     ?>
+    <h2>DPS</h2>
+    <?php
+    echo Tabs::widget([
+    'items' => $items
+    ]);
+    ?>
+    <h2>DPS sum</h2>
+    <?php
+    echo Tabs::widget([
+        'items' => $itemsSum
+    ]);
+    ?>
+
 </div>

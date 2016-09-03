@@ -17,6 +17,7 @@ AppAsset::register($this);
 <head>
     <meta charset="<?= Yii::$app->charset ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="<?php echo Yii::$app->request->baseUrl; ?>/favicon.ico?v=2" type="image/x-icon" />
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
@@ -35,9 +36,7 @@ AppAsset::register($this);
     ]);
 
     $items = [];
-    $items[]=  ['label' => 'Global', 'url' => ['/dps/global']];
-    $items[] = ['label' => 'By class', 'url' => ['/dps/class']];
-    $items[] = ['label' => 'By class - Sum', 'url' => ['/dps/classsum']];
+    $items[]=  ['label' => 'Global', 'url' => ['/dps/']];
     $list_boss = unserialize(MenuWidget::widget(['language' => 'EU-EN']));
     foreach ($list_boss as $area){
         $items[] = $area;
@@ -46,19 +45,8 @@ AppAsset::register($this);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
-            ['label' => 'Class', 'items' => [
-                ['label' => 'Global', 'url' => ['/class/global']],
-                ['label' => 'By region', 'url' => ['/class/region']],
-                ['label' => 'By date - EU', 'url' => ['/class/date', 'region' => 'EU']],
-                ['label' => 'By date - NA', 'url' => ['/class/date', 'region' => 'NA']],
-                ['label' => 'By date - RU', 'url' => ['/class/date', 'region' => 'RU']],
-                ['label' => 'By date - KR', 'url' => ['/class/date', 'region' => 'KR']],
-                ['label' => 'By date - TW', 'url' => ['/class/date', 'region' => 'TW']],
-                ['label' => 'By date - JP', 'url' => ['/class/date', 'region' => 'JP']],
-
-            ]],
+            ['label' => 'Class','url' => ['/class/']],
             ['label' => 'Dps statistics', 'items' => $items]
-
         ],
     ]);
     NavBar::end();
