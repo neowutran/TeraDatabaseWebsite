@@ -40,7 +40,9 @@ class ClassController extends Controller
         $regions["RU"] = ClassParsing::dateData("RU");
         $regions["TW"] = ClassParsing::dateData("TW");
         $regions["KR"] = ClassParsing::dateData("KR");
-        $regions["JP"] = ClassParsing::dateData("JP");
+		$regions["JP"] = ClassParsing::dateData("JP");
+		$regions["THA"] = ClassParsing::dateData("THA");
+		$regions["KR-PTS"] = ClassParsing::dateData("KR-PTS");
 
         return $this->render('index', [
             "globalRegion" => $globalRegion,

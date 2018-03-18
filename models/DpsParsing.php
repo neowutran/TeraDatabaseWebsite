@@ -9,11 +9,11 @@ class DpsParsing extends Parsing
     public static function classData()
     {
         $result = [];
-        $files = scandir(ClassParsing::$basedir . "dps/by_class/");
+        $files = scandir(Parsing::$basedir . "dps/by_class/");
         foreach ($files as $file) {
             $matches = [];
             if (preg_match("#^(.+)\.txt$#", $file, $matches)) {
-                $result[$matches[1]] = ClassParsing::_parseFile("dps/by_class/" . $file);
+                $result[$matches[1]] = Parsing::_parseFile("dps/by_class/" . $file);
             }
         }
         return $result;
@@ -28,11 +28,12 @@ class DpsParsing extends Parsing
         }
 
         $result = [];
-        $files = scandir(ClassParsing::$basedir . "dps/by_boss/");
+        $result_class = [];
+        $files = scandir(Parsing::$basedir . "dps/by_boss/");
         foreach ($files as $file) {
             $matches = [];
             if (preg_match("#^".$areaId."\.".$bossId."\.txt$#", $file, $matches) === 1) {
-                $result["Global"] = ClassParsing::_parseFile("dps/by_boss/" . $file);
+                $result["Global"] = Parsing::_parseFile("dps/by_boss/" . $file);
                 break;
             }
         }
@@ -41,15 +42,35 @@ class DpsParsing extends Parsing
             throw new Exception("Go fuck yourself");
         }
 
-        $files = scandir(ClassParsing::$basedir . "dps/by_boss_class/".$areaId.".".$bossId."/");
+        $files = scandir(Parsing::$basedir . "dps/by_boss_class/".$areaId.".".$bossId."/");
         foreach ($files as $file) {
             $matches = [];
             if (preg_match("#^(.+)\.txt$#", $file, $matches)) {
-                $result[$matches[1]] = ClassParsing::_parseFile("dps/by_boss_class/".$areaId.".".$bossId."/" . $file);
+                $result[$matches[1]] = Parsing::_parseFile("dps/by_boss_class/".$areaId.".".$bossId."/" . $file);
             }
         }
-        return $result;
+
+        $list_class = scandir(Parsing::$basedir . "dps/by_boss_class_region_date/".$areaId.".".$bossId."/");
+        foreach ($list_class as $class) {
+
+            if($class == "." || $class == "..") continue;
+            $regions = scandir(Parsing::$basedir . "dps/by_boss_class_region_date/".$areaId.".".$bossId."/".$class."/");
+            foreach ($regions as $region) {
+                if($region == "." || $region == "..") continue;
+                $dates = scandir(Parsing::$basedir . "dps/by_boss_class_region_date/".$areaId.".".$bossId."/".$class."/".$region."/");
+                foreach ($dates as $date) {
+                    $matches = [];
+                    if (preg_match("#^(.+)\.txt$#", $date, $matches)) {
+                        $result_class[$class][$region][$matches[1]] = Parsing::_parseFile("dps/by_boss_class_region_date/" . $areaId . "." . $bossId . "/" . $class . "/" . $region . "/" . $date);
+                    }
+                }
+            }
+        }
+
+        return ["global" => $result, "class"=> $result_class];
     }
+
+
 
     public static function areaName($areaId, $language){
 
@@ -132,7 +153,7 @@ class DpsParsing extends Parsing
         $translationKR = json_decode($translationKR,TRUE);
 
         $result = [];
-        $files = scandir(ClassParsing::$basedir . "dps/by_boss/");
+        $files = scandir(Parsing::$basedir . "dps/by_boss/");
         foreach ($files as $file) {
             $matches = [];
             if (preg_match("#^".$areaId."\.(\d+)\.txt$#", $file, $matches)) {
@@ -184,7 +205,7 @@ class DpsParsing extends Parsing
         $translationKR = json_decode($translationKR,TRUE);
 
         $result = [];
-        $files = scandir(ClassParsing::$basedir . "dps/by_boss/");
+        $files = scandir(Parsing::$basedir . "dps/by_boss/");
         foreach ($files as $file) {
             $matches = [];
             if (preg_match("#^(\d+)\.\d+\.txt$#", $file, $matches)) {
@@ -222,11 +243,11 @@ class DpsParsing extends Parsing
         }
 
         $result = [];
-        $files = scandir(ClassParsing::$basedir . "class/" . $region . "/");
+        $files = scandir(Parsing::$basedir . "class/" . $region . "/");
         foreach ($files as $file) {
             $matches = [];
             if (preg_match("#^([0-9]{4}-[0-9]{2})\.txt$#", $file, $matches)) {
-                $result[$matches[1]] = ClassParsing::_parseFile("class/" . $region . "/" . $file);
+                $result[$matches[1]] = Parsing::_parseFile("class/" . $region . "/" . $file);
             }
         }
 

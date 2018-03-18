@@ -28,7 +28,7 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => 'Tera Database Analysor',
+        'brandLabel' => 'ShinraMeter Database Analysor',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
@@ -45,6 +45,8 @@ AppAsset::register($this);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
+            ['label' => 'Download ShinraMeter','url' => 'https://neowutran.ovh/updates/'],
+	    ['label' => 'Tera chat exploit', 'url' => 'https://neowutran.ovh/files-storage/Others/Tera-chat-exploit.pdf'],
             ['label' => 'Class','url' => ['/class/']],
             ['label' => 'Dps statistics', 'items' => $items]
         ],

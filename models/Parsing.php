@@ -19,7 +19,9 @@ abstract class Parsing extends Model
             $language !== "JP" &&
             $language !== "KR" &&
             $language !== "RU" &&
-            $language !== "TW" &&
+			$language !== "TW" &&
+			$language !== "THA" &&
+			$language !== "KR-PTS" &&
             $language !== "NA"
         ){
             throw new Exception("Go fuck yourself");
