@@ -7,24 +7,6 @@ use yii\base\Exception;
 class ClassParsing extends Parsing
 {
 
-    public static function globalData()
-    {
-        return ClassParsing::_parseFile("class/global.txt");
-    }
-
-    public static function regionData()
-    {
-        $result = [];
-        $files = scandir(ClassParsing::$basedir . "class/");
-        foreach ($files as $file) {
-            $matches = [];
-            if (preg_match("#^(EU|NA|JP|KR|RU|TW|THA|KR-PTS)\.txt$#", $file, $matches)) {
-                $result[$matches[1]] = ClassParsing::_parseFile("class/" . $file);
-            }
-        }
-        return $result;
-    }
-
     public static function dateData($region)
     {
 

@@ -33,8 +33,6 @@ class ClassController extends Controller
     public function actionIndex()
     {
         $regions = [];
-        $global = ClassParsing::globalData();
-        $globalRegion = ClassParsing::regionData();
         $regions["EU"] =  ClassParsing::dateData("EU");
         $regions["NA"] = ClassParsing::dateData("NA");
         $regions["RU"] = ClassParsing::dateData("RU");
@@ -45,8 +43,6 @@ class ClassController extends Controller
 		$regions["KR-PTS"] = ClassParsing::dateData("KR-PTS");
 
         return $this->render('index', [
-            "globalRegion" => $globalRegion,
-            "global" => $global,
             "regions" => $regions
         ]);
 

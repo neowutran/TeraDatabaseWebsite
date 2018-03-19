@@ -9,8 +9,6 @@ abstract class Parsing extends Model
 {
     protected static $basedir = "/home/http/neowutran-website/web/data/";
 
-
-
     public static function boss($language){
         if(
             $language !== "EU-EN" &&

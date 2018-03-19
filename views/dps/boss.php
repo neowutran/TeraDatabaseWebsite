@@ -31,129 +31,75 @@ $borderColor = [
         <li>Y axis: % of the playerbase doing the same DPS as the X value</li>
     </ul>
     </p>
-    <?php
-
-    $items = [];
-    $itemsSum = [];
-    foreach ($data as $class => $boss_data) {
-        $i = 0;
-        $data_count = [];
-        $current_background = [];
-        $sum_count = [];
-        foreach ($boss_data[1] as $count) {
-            $data_count[] = round((($count * 100) / $boss_data[2]), 3);
-            $current_background[] = $backgroundColor[$i % 6];
-            $current_border[] = $borderColor[$i % 6];
-            if ($i == 0) {
-                $sum_count[$i] = $count;
-            } else {
-                $sum_count[$i] = $count + $sum_count[$i - 1];
-            }
-            $i++;
-        }
-
-        $sum_percentage = [];
-        $sum_percentage[] = "100";
-        foreach ($sum_count as $sum) {
-            $sum_percentage[] = round((($boss_data[2] - $sum) * 100) / $boss_data[2], 3);
-        }
-
-        $chart =  ChartJs::widget([
-            'type' => 'bar',
-            'options' => [
-                'responsive' => true,
-                'title' => [
-                    'display' => false,
-                    'text' => $bossName . ' dps'
-                ],
-                "tooltips" => [
-                    "enabled" => false,
-                ],
-                "legend" => [
-                    "display" => true
-                ],
-            ],
-
-            'data' => [
-                'labels' => $boss_data[0],
-                'datasets' => [
-                    [
-                        'label' => $bossName . " boss ",
-                        'backgroundColor' => $current_background,
-                        'borderColor' => $current_border,
-                        'borderWidth' => 1,
-                        'data' => $data_count,
-                    ],
-
-                ]
-            ]
-        ]);
-
-
-        $chartSum =  ChartJs::widget([
-            'type' => 'bar',
-            'options' => [
-                'responsive' => true,
-                'title' => [
-                    'display' => false,
-                    'text' => $bossName . ' dps'
-                ],
-                "tooltips" => [
-                    "enabled" => false,
-                ],
-                "legend" => [
-                    "display" => true
-                ],
-            ],
-
-            'data' => [
-                'labels' => $boss_data[0],
-                'datasets' => [
-                    [
-                        'label' => $bossName . " boss ",
-                        'backgroundColor' => $current_background,
-                        'borderColor' => $current_border,
-                        'borderWidth' => 1,
-                        'data' => $sum_percentage,
-                    ],
-
-                ]
-            ]
-        ]);
-
-
-        $active = false;
-        if($class == "Global"){
+<?php
+    foreach ($data as $class => $dataRegions){
+        foreach ($dataRegions as $region => $dataRegion) {
             $active = true;
+            $items = [];
+            foreach ($dataRegion as $date => $data){
+
+                $i = 0;
+                $data_count = [];
+                $current_background = [];
+                $current_border = [];
+                $sum_count = [];
+                foreach ($data[1] as $count) {
+                    $data_count[] = round((($count * 100) / $data[2]), 3);
+                    $current_background[] = $backgroundColor[$i % 6];
+                    $current_border[] = $borderColor[$i % 6];
+                    if ($i == 0) {
+                        $sum_count[$i] = $count;
+                    } else {
+                        $sum_count[$i] = $count + $sum_count[$i - 1];
+                    }
+                    $i++;
+                }
+
+                $chart =  ChartJs::widget([
+                    'type' => 'bar',
+                    'options' => [
+                        'responsive' => true,
+                        'title' => [
+                            'display' => false,
+                            'text' => $bossName . ' - '. $date
+                        ],
+                        "tooltips" => [
+                            "enabled" => false,
+                        ],
+                        "legend" => [
+                            "display" => true
+                        ],
+                    ],
+
+                    'data' => [
+                        'labels' => $data[0],
+                        'datasets' => [
+                            [
+                                'label' => $bossName . " - " . $region . " - ". $class,
+                                'backgroundColor' => $current_background,
+                                'borderColor' => $current_border,
+                                'borderWidth' => 1,
+                                'data' => $data_count,
+                            ],
+
+                        ]
+                    ]
+                ]);
+
+                $items[] = [
+                    'label' => $date,
+                    'content' => $chart,
+                    'active' =>$active
+                ];
+
+                $active = false;
+
+            }
+            echo "<h2> $class - $region </h2>";
+            echo Tabs::widget([
+                'items' => $items
+            ]);
         }
-
-        $items[] = [
-            'label' => $class,
-            'content' => $chart,
-            'active' =>$active
-        ];
-
-
-        $itemsSum[] = [
-            'label' => $class,
-            'content' => $chartSum,
-            'active' =>$active
-        ];
-
-
     }
     ?>
-    <h2>DPS</h2>
-    <?php
-    echo Tabs::widget([
-    'items' => $items
-    ]);
-    ?>
-    <h2>DPS sum</h2>
-    <?php
-    echo Tabs::widget([
-        'items' => $itemsSum
-    ]);
-    ?>
-
 </div>

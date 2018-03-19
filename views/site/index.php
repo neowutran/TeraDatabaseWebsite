@@ -12,9 +12,13 @@ $this->title = 'Tera Database Analysor';
         <br>
         <h2>Contribute</h2>
         <ul>
-            <li> Python software to extract data: <a href="https://github.com/neowutran/TeraDatabaseAnalysor"> TeraDatabaseAnalysor </a></li>
-            <li> Raw data extracted: <a href="https://github.com/neowutran/TeraDatabaseData"> TeraDatabaseData </a></li>
-            <li> Yii2 website to display data: <a href="https://github.com/neowutran/TeraDatabaseWebsite"> TeraDatabaseAnalysorWebsite </a></li>
+            <li> <a href="https://github.com/neowutran/TeraDatabaseAnalysor">Python software to extract data from Shinra database</a></li>
+            <li> <a href="https://github.com/neowutran/TeraDatabaseData">Raw shinra data extracted</a></li>
+            <li> <a href="https://github.com/neowutran/TeraDatabaseWebsite">Yii2 website to display shinra data</a></li>
+            <li> <a href="https://github.com/neowutran/ShinraMeter">ShinraMeter</a> </li>
+            <li> <a href="https://github.com/neowutran/Tera">Dps meters Core</a></li>
+            <li> <a href="https://github.com/neowutran/TeraDpsMeterData"> Dps meters data</a></li>
+            <li> <a href="https://github.com/neowutran/Freezer">Freezer for KTera</a> (a easier solution than that is to run tera without using the launcher, it will crash but data still available in ram)</li>
         </ul>
 
     </div>

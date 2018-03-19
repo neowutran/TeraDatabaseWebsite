@@ -52,12 +52,13 @@ class DpsController extends Controller
         return $this->render('boss', ["data"=>$data,"areaName"=> $areaName, "areaId"=>$areaId, "bossName"=>$bossName, "bossId"=>$bossId ]);
     }
 
+    public function actionClass(){
+
+    }
+
     public function actionIndex()
     {
-        $classData = DpsParsing::classData();
-        return $this->render('index', [
-            "classData" => $classData,
-        ]);
+        return $this->render('index', []);
 
     }
 

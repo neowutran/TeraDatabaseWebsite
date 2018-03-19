@@ -6,18 +6,6 @@ use yii\base\Exception;
 
 class DpsParsing extends Parsing
 {
-    public static function classData()
-    {
-        $result = [];
-        $files = scandir(Parsing::$basedir . "dps/by_class/");
-        foreach ($files as $file) {
-            $matches = [];
-            if (preg_match("#^(.+)\.txt$#", $file, $matches)) {
-                $result[$matches[1]] = Parsing::_parseFile("dps/by_class/" . $file);
-            }
-        }
-        return $result;
-    }
 
     public static function bossData($areaId, $bossId)
     {
@@ -26,51 +14,26 @@ class DpsParsing extends Parsing
             !preg_match("#^\d+$#",$bossId)){
             throw new Exception("Go fuck yourself");
         }
-
-        $result = [];
-        $result_class = [];
-        $files = scandir(Parsing::$basedir . "dps/by_boss/");
-        foreach ($files as $file) {
-            $matches = [];
-            if (preg_match("#^".$areaId."\.".$bossId."\.txt$#", $file, $matches) === 1) {
-                $result["Global"] = Parsing::_parseFile("dps/by_boss/" . $file);
-                break;
-            }
-        }
-
-        if(empty($result["Global"])){
-            throw new Exception("Go fuck yourself");
-        }
-
-        $files = scandir(Parsing::$basedir . "dps/by_boss_class/".$areaId.".".$bossId."/");
-        foreach ($files as $file) {
-            $matches = [];
-            if (preg_match("#^(.+)\.txt$#", $file, $matches)) {
-                $result[$matches[1]] = Parsing::_parseFile("dps/by_boss_class/".$areaId.".".$bossId."/" . $file);
-            }
-        }
-
-        $list_class = scandir(Parsing::$basedir . "dps/by_boss_class_region_date/".$areaId.".".$bossId."/");
+		
+		$list_class = scandir(Parsing::$basedir . "dps/".$areaId."-".$bossId."/");
         foreach ($list_class as $class) {
 
             if($class == "." || $class == "..") continue;
-            $regions = scandir(Parsing::$basedir . "dps/by_boss_class_region_date/".$areaId.".".$bossId."/".$class."/");
+            $regions = scandir(Parsing::$basedir . "dps/".$areaId."-".$bossId."/".$class."/");
             foreach ($regions as $region) {
                 if($region == "." || $region == "..") continue;
-                $dates = scandir(Parsing::$basedir . "dps/by_boss_class_region_date/".$areaId.".".$bossId."/".$class."/".$region."/");
+                $dates = scandir(Parsing::$basedir . "dps/".$areaId."-".$bossId."/".$class."/".$region."/");
                 foreach ($dates as $date) {
                     $matches = [];
                     if (preg_match("#^(.+)\.txt$#", $date, $matches)) {
-                        $result_class[$class][$region][$matches[1]] = Parsing::_parseFile("dps/by_boss_class_region_date/" . $areaId . "." . $bossId . "/" . $class . "/" . $region . "/" . $date);
+                        $result_class[$class][$region][$matches[1]] = Parsing::_parseFile("dps/" . $areaId . "-" . $bossId . "/" . $class . "/" . $region . "/" . $date);
                     }
                 }
             }
         }
 
-        return ["global" => $result, "class"=> $result_class];
-    }
-
-
+        return $result_class;
+	}
 
     public static function areaName($areaId, $language){
 
@@ -233,26 +196,6 @@ class DpsParsing extends Parsing
             }
         }
         return $result;
-    }
-
-    public static function dateData($region)
-    {
-
-        if ($region != "EU" && $region != "NA" && $region != "KR" && $region != "RU" && $region != "JP" && $region != "TW") {
-            throw new Exception("Go fuck yourself");
-        }
-
-        $result = [];
-        $files = scandir(Parsing::$basedir . "class/" . $region . "/");
-        foreach ($files as $file) {
-            $matches = [];
-            if (preg_match("#^([0-9]{4}-[0-9]{2})\.txt$#", $file, $matches)) {
-                $result[$matches[1]] = Parsing::_parseFile("class/" . $region . "/" . $file);
-            }
-        }
-
-        return $result;
-
     }
 
 }
