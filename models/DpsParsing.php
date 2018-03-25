@@ -116,10 +116,10 @@ class DpsParsing extends Parsing
         $translationKR = json_decode($translationKR,TRUE);
 
         $result = [];
-        $files = scandir(Parsing::$basedir . "dps/by_boss/");
+        $files = scandir(Parsing::$basedir . "dps/");
         foreach ($files as $file) {
             $matches = [];
-            if (preg_match("#^".$areaId."\.(\d+)\.txt$#", $file, $matches)) {
+            if (preg_match("#^".$areaId."-(\d+)$#", $file, $matches)) {
 
                 $bossId = $matches[1];
                 $bossName = "";
@@ -168,10 +168,10 @@ class DpsParsing extends Parsing
         $translationKR = json_decode($translationKR,TRUE);
 
         $result = [];
-        $files = scandir(Parsing::$basedir . "dps/by_boss/");
+        $files = scandir(Parsing::$basedir . "dps/");
         foreach ($files as $file) {
             $matches = [];
-            if (preg_match("#^(\d+)\.\d+\.txt$#", $file, $matches)) {
+            if (preg_match("#^(\d+)-\d+$#", $file, $matches)) {
 
                 $areaId = $matches[1];
                 $areaName = "";

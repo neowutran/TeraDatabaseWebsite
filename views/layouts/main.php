@@ -36,7 +36,6 @@ AppAsset::register($this);
     ]);
 
     $items = [];
-    $items[]=  ['label' => 'Global', 'url' => ['/dps/']];
     $list_boss = unserialize(MenuWidget::widget(['language' => 'EU-EN']));
     foreach ($list_boss as $area){
         $items[] = $area;

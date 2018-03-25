@@ -30,7 +30,8 @@ $this->params['breadcrumbs'][] = $this->title;
     echo "<h2>class usage statistics by region and date</h2>";
 
     $active = true;
-    $items = [];
+	$items = [];
+
     foreach ($regions as $region => $data) {
         $i = 0;
         $dataset = [];
@@ -38,7 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             $data_count = [];
             foreach ($date_data[1] as $count) {
-                $data_count[] = round(($count * 100) / $date_data[2], 3);
+                $data_count[] = $count;
             }
 
             $dataset[] = [

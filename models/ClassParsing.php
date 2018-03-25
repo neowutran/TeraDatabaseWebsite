@@ -18,7 +18,7 @@ class ClassParsing extends Parsing
         $files = scandir(ClassParsing::$basedir . "class/" . $region . "/");
         foreach ($files as $file) {
             $matches = [];
-            if (preg_match("#^([0-9]{4}-[0-9]{1,2})\.txt$#", $file, $matches)) {
+            if (preg_match("#^([0-9]+-[0-9]+)\.txt$#", $file, $matches)) {
                 $result[$matches[1]] = ClassParsing::_parseFile("class/" . $region . "/" . $file);
             }
         }
